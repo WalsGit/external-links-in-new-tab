@@ -11,13 +11,13 @@ Adds `target="_blank" rel="noopener noreferrer"` to every external link on the f
 Install with composer:
 
 ```sh
-composer require walsgit/external-link-in-new-tab:"*"
+composer require walsgit/external-links-in-new-tab:"*"
 ```
 
 ## Updating
 
 ```sh
-composer update walsgit/external-link-in-new-tab:"*"
+composer update walsgit/external-links-in-new-tab:"*"
 php flarum migrate
 php flarum cache:clear
 ```
