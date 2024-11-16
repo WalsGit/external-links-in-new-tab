@@ -26,4 +26,4 @@ php flarum cache:clear
 
 - [Packagist](https://packagist.org/packages/walsgit/external-link-in-new-tab)
 - [GitHub](https://github.com/walsgit/external-link-in-new-tab)
-- [Discuss](https://discuss.flarum.org/d/PUT_DISCUSS_SLUG_HERE)
+- [Issues](https://github.com/WalsGit/external-links-in-new-tab/issues)

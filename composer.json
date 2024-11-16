@@ -2,7 +2,7 @@
     "name": "walsgit/external-links-in-new-tab",
     "description": "Opens all external links in a new tab",
     "keywords": [
-        "flarum", "links", "url", "forum", "nav"
+        "flarum", "flarum-extention", "extension", "links", "url", "forum", "nav"
     ],
     "type": "flarum-extension",
     "license": "MIT",
@@ -23,7 +23,7 @@
     "extra": {
         "flarum-extension": {
             "title": "External Links In New Tab",
-            "category": "Links",
+            "category": "feature",
             "icon": {
                 "name": "fas fa-external-link-alt",
                 "color": "#fff",
@@ -49,29 +49,7 @@
             }
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "autoload-dev": {
-        "psr-4": {
-            "Walsgit\\ExternalLinksInNewTab\\Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "test": [
-            "@test:unit",
-            "@test:integration"
-        ],
-        "test:unit": "phpunit -c tests/phpunit.unit.xml",
-        "test:integration": "phpunit -c tests/phpunit.integration.xml",
-        "test:setup": "@php tests/integration/setup.php"
-    },
-    "scripts-descriptions": {
-        "test": "Runs all tests.",
-        "test:unit": "Runs all unit tests.",
-        "test:integration": "Runs all integration tests.",
-        "test:setup": "Sets up a database for use with integration tests. Execute this only once."
-    },
-    "require-dev": {
-        "flarum/testing": "^1.0.0"
+    "support": {
+        "issues": "https://github.com/WalsGit/external-links-in-new-tab/issues"
     }
 }
