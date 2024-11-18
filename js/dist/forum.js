@@ -12,21 +12,6 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/forum/app */ "flarum/forum/app");
 /* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_app__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/common/extend */ "flarum/common/extend");
-/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_common_extend__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var flarum_forum_components_PostStream__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/forum/components/PostStream */ "flarum/forum/components/PostStream");
-/* harmony import */ var flarum_forum_components_PostStream__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_components_PostStream__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flarum_forum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/forum/components/IndexPage */ "flarum/forum/components/IndexPage");
-/* harmony import */ var flarum_forum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var flarum_forum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/forum/components/DiscussionPage */ "flarum/forum/components/DiscussionPage");
-/* harmony import */ var flarum_forum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var flarum_forum_components_Post__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/forum/components/Post */ "flarum/forum/components/Post");
-/* harmony import */ var flarum_forum_components_Post__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_components_Post__WEBPACK_IMPORTED_MODULE_5__);
-
-
-
-
-
 
 flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().initializers.add('walsgit/external-links', function () {
   var openExternalLinksInNewTab = function openExternalLinksInNewTab() {
@@ -35,46 +20,37 @@ flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().initializers.add('walsgi
       if (href) {
         var url = new URL(href);
         if (url.host !== window.location.host) {
-          element.setAttribute('target', '_blank');
-          element.setAttribute('rel', 'noopener noreferrer');
+          if (!element.hasAttribute('target') || element.getAttribute('target') !== '_blank') element.setAttribute('target', '_blank');
+          if (!element.hasAttribute('rel')) {
+            element.setAttribute('rel', 'noopener noreferrer');
+          } else {
+            var rel = element.getAttribute('rel') || '';
+            if (!rel.includes('noopener')) rel += " noopener";
+            if (!rel.includes('noreferrer')) rel += " noreferrer";
+            element.setAttribute('rel', rel);
+          }
         }
       }
     });
   };
-
-  // Target nav and menu links
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_1__.extend)((flarum_forum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3___default().prototype), 'oncreate', openExternalLinksInNewTab);
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_1__.extend)((flarum_forum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4___default().prototype), 'oncreate', openExternalLinksInNewTab);
-
-  // Target post links
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_1__.extend)((flarum_forum_components_PostStream__WEBPACK_IMPORTED_MODULE_2___default().prototype), 'oncreate', function () {
+  var observer = new MutationObserver(function () {
     openExternalLinksInNewTab();
   });
 
-  // Target all other extarnal links in the page
+  // Attach observer to monitor dynamic changes in the document
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  // Initial processing for existing links
   openExternalLinksInNewTab();
 
-  // Listen to post creation event
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_1__.extend)((flarum_forum_components_Post__WEBPACK_IMPORTED_MODULE_5___default().prototype), 'oncreate', function () {
-    openExternalLinksInNewTab();
-  });
-
-  // Listen to post update event
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_1__.extend)((flarum_forum_components_Post__WEBPACK_IMPORTED_MODULE_5___default().prototype), 'onupdate', function () {
-    openExternalLinksInNewTab();
+  // Clean up observer when the page is unloaded
+  window.addEventListener('beforeunload', function () {
+    return observer.disconnect();
   });
 });
-
-/***/ }),
-
-/***/ "flarum/common/extend":
-/*!******************************************************!*\
-  !*** external "flarum.core.compat['common/extend']" ***!
-  \******************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = flarum.core.compat['common/extend'];
 
 /***/ }),
 
@@ -86,50 +62,6 @@ module.exports = flarum.core.compat['common/extend'];
 
 "use strict";
 module.exports = flarum.core.compat['forum/app'];
-
-/***/ }),
-
-/***/ "flarum/forum/components/DiscussionPage":
-/*!************************************************************************!*\
-  !*** external "flarum.core.compat['forum/components/DiscussionPage']" ***!
-  \************************************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = flarum.core.compat['forum/components/DiscussionPage'];
-
-/***/ }),
-
-/***/ "flarum/forum/components/IndexPage":
-/*!*******************************************************************!*\
-  !*** external "flarum.core.compat['forum/components/IndexPage']" ***!
-  \*******************************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = flarum.core.compat['forum/components/IndexPage'];
-
-/***/ }),
-
-/***/ "flarum/forum/components/Post":
-/*!**************************************************************!*\
-  !*** external "flarum.core.compat['forum/components/Post']" ***!
-  \**************************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = flarum.core.compat['forum/components/Post'];
-
-/***/ }),
-
-/***/ "flarum/forum/components/PostStream":
-/*!********************************************************************!*\
-  !*** external "flarum.core.compat['forum/components/PostStream']" ***!
-  \********************************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = flarum.core.compat['forum/components/PostStream'];
 
 /***/ })
 
