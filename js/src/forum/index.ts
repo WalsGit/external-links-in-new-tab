@@ -19,29 +19,27 @@ app.initializers.add('walsgit/external-links', () => {
         });
     };
 
-    if (!window.location.pathname.startsWith('/admin')) {
-        // Target nav and menu links
-        extend(IndexPage.prototype, 'oncreate', openExternalLinksInNewTab);
-        extend(DiscussionPage.prototype, 'oncreate', openExternalLinksInNewTab);
+    // Target nav and menu links
+    extend(IndexPage.prototype, 'oncreate', openExternalLinksInNewTab);
+    extend(DiscussionPage.prototype, 'oncreate', openExternalLinksInNewTab);
 
-        // Target post links
-        extend(PostStream.prototype, 'oncreate', function () {
-            openExternalLinksInNewTab();
-        });
-
-        // Target all other extarnal links in the page
+    // Target post links
+    extend(PostStream.prototype, 'oncreate', function () {
         openExternalLinksInNewTab();
+    });
 
-        // Listen to post creation event
-        extend(Post.prototype, 'oncreate', function () {
-            openExternalLinksInNewTab();
-        });
+    // Target all other extarnal links in the page
+    openExternalLinksInNewTab();
 
-        // Listen to post update event
-        extend(Post.prototype, 'onupdate', function () {
-            openExternalLinksInNewTab();
-        });
-    }
+    // Listen to post creation event
+    extend(Post.prototype, 'oncreate', function () {
+        openExternalLinksInNewTab();
+    });
+
+    // Listen to post update event
+    extend(Post.prototype, 'onupdate', function () {
+        openExternalLinksInNewTab();
+    });
 });
 
 
