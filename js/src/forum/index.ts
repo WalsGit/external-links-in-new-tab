@@ -8,15 +8,16 @@ import Post from 'flarum/forum/components/Post';
 
 app.initializers.add('walsgit/external-links', () => {
     const openExternalLinksInNewTab = () => {
-        document.querySelectorAll('a[href^="http"]').forEach((element: Element) => {
-            if (element instanceof HTMLAnchorElement) {
-                const link = element;
-                if (!link.href.includes(window.location.hostname)) {
-                    link.setAttribute('target', '_blank');
-                    link.setAttribute('rel', 'noopener noreferrer');
+            document.querySelectorAll('a[href^="http"]').forEach((element: Element) => {
+                const href = element.getAttribute('href');
+                if (href) {
+                    const url = new URL(href);
+                    if (url.host !== window.location.host) {
+                        element.setAttribute('target', '_blank');
+                        element.setAttribute('rel', 'noopener noreferrer');
+                    }
                 }
-            }
-        });
+            });
     };
 
     // Target nav and menu links

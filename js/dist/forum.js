@@ -31,11 +31,12 @@ __webpack_require__.r(__webpack_exports__);
 flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().initializers.add('walsgit/external-links', function () {
   var openExternalLinksInNewTab = function openExternalLinksInNewTab() {
     document.querySelectorAll('a[href^="http"]').forEach(function (element) {
-      if (element instanceof HTMLAnchorElement) {
-        var link = element;
-        if (!link.href.includes(window.location.hostname)) {
-          link.setAttribute('target', '_blank');
-          link.setAttribute('rel', 'noopener noreferrer');
+      var href = element.getAttribute('href');
+      if (href) {
+        var url = new URL(href);
+        if (url.host !== window.location.host) {
+          element.setAttribute('target', '_blank');
+          element.setAttribute('rel', 'noopener noreferrer');
         }
       }
     });
