@@ -4,7 +4,7 @@
 
 A [Flarum](https://flarum.org) extension. Opens all external links in a new tab
 
-Adds `target="_blank" rel="noopener noreferrer"` to every external link on the forum frontend (excluding the admin frontend).
+Adds `target="_blank" rel="noopener noreferrer"` to every external link on the forum frontend (excluding the admin frontend). As of version 1.1.0, it no longer overrides existing rel attributes, but adds the `noopener noreferrer` if not found in them (Thanks to [@clarkwinkelmann](https://discuss.flarum.org/d/36348-external-links-in-new-tab/2) for pointing that out).
 
 ## Installation
 

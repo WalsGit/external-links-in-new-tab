@@ -1,47 +1,38 @@
 import app from 'flarum/forum/app';
 
-import { extend } from 'flarum/common/extend';
-import PostStream from 'flarum/forum/components/PostStream';
-import IndexPage from 'flarum/forum/components/IndexPage';
-import DiscussionPage from 'flarum/forum/components/DiscussionPage';
-import Post from 'flarum/forum/components/Post';
-
 app.initializers.add('walsgit/external-links', () => {
     const openExternalLinksInNewTab = () => {
-        document.querySelectorAll('a[href^="http"]').forEach((element: Element) => {
-            if (element instanceof HTMLAnchorElement) {
-                const link = element;
-                if (!link.href.includes(window.location.hostname)) {
-                    link.setAttribute('target', '_blank');
-                    link.setAttribute('rel', 'noopener noreferrer');
+            document.querySelectorAll('a[href^="http"]').forEach((element: Element) => {
+                const href = element.getAttribute('href');
+                if (href) {
+                    const url = new URL(href);
+                    if (url.host !== window.location.host) {
+                        if(!element.hasAttribute('target') || element.getAttribute('target') !== '_blank') element.setAttribute('target', '_blank');
+                        if(!element.hasAttribute('rel')) {
+                            element.setAttribute('rel', 'noopener noreferrer');
+                        } else {
+                            let rel = element.getAttribute('rel') || '';
+                            if(!rel.includes('noopener')) rel += " noopener";
+                            if(!rel.includes('noreferrer')) rel += " noreferrer";
+                            element.setAttribute('rel', rel);
+                        }
+                    }
                 }
-            }
-        });
-    };
-
-    if (!window.location.pathname.startsWith('/admin')) {
-        // Target nav and menu links
-        extend(IndexPage.prototype, 'oncreate', openExternalLinksInNewTab);
-        extend(DiscussionPage.prototype, 'oncreate', openExternalLinksInNewTab);
-
-        // Target post links
-        extend(PostStream.prototype, 'oncreate', function () {
-            openExternalLinksInNewTab();
-        });
-
-        // Target all other extarnal links in the page
-        openExternalLinksInNewTab();
-
-        // Listen to post creation event
-        extend(Post.prototype, 'oncreate', function () {
-            openExternalLinksInNewTab();
-        });
-
-        // Listen to post update event
-        extend(Post.prototype, 'onupdate', function () {
-            openExternalLinksInNewTab();
-        });
+            });
     }
+
+    const observer = new MutationObserver(() => {
+        openExternalLinksInNewTab();
+    });
+
+    // Attach observer to monitor dynamic changes in the document
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Initial processing for existing links
+    openExternalLinksInNewTab();
+
+    // Clean up observer when the page is unloaded
+    window.addEventListener('beforeunload', () => observer.disconnect());
 });
 
 
