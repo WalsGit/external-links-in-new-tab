@@ -1,6 +1,6 @@
 # External Links In New Tab
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/walsgit/external-links-in-new-tab.svg)](https://packagist.org/packages/walsgit/external-links-in-new-tab) [![Total Downloads](https://img.shields.io/packagist/dt/walsgit/external-links-in-new-tab.svg)](https://packagist.org/packages/walsgit/external-links-in-new-tab)
+![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/walsgit/external-links-in-new-tab.svg)](https://packagist.org/packages/walsgit/external-links-in-new-tab) [![Total Downloads](https://img.shields.io/packagist/dt/walsgit/external-links-in-new-tab.svg)](https://packagist.org/packages/walsgit/external-links-in-new-tab) [![Donate here](https://img.shields.io/badge/donate-here-%23008e97)](https://walsgit.github.io/Donations/)
 
 A [Flarum](https://flarum.org) extension. Opens all external links in a new tab
 
@@ -28,3 +28,4 @@ php flarum cache:clear
 - [GitHub](https://github.com/walsgit/external-links-in-new-tab)
 - [Issues](https://github.com/WalsGit/external-links-in-new-tab/issues)
 - [Discuss](https://discuss.flarum.org/d/36348-external-links-in-new-tab)
+- [Donate](https://walsgit.github.io/Donations/)
