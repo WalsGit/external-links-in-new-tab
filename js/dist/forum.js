@@ -15,11 +15,16 @@ __webpack_require__.r(__webpack_exports__);
 
 flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().initializers.add('walsgit/external-links', function () {
   var openExternalLinksInNewTab = function openExternalLinksInNewTab() {
+    if (!(flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().forum) || !(flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().forum).attribute) return;
+    var fullbaseUrl = new URL(flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().forum.attribute('baseUrl'));
+    var baseUrl = fullbaseUrl.hostname + fullbaseUrl.pathname; // base URL without https:// or https://
+
     document.querySelectorAll('a[href^="http"]').forEach(function (element) {
       var href = element.getAttribute('href');
       if (href) {
         var url = new URL(href);
-        if (url.host !== window.location.host) {
+        var checkedUrl = url.hostname + url.pathname;
+        if (!checkedUrl.startsWith(baseUrl)) {
           if (!element.hasAttribute('target') || element.getAttribute('target') !== '_blank') element.setAttribute('target', '_blank');
           if (!element.hasAttribute('rel')) {
             element.setAttribute('rel', 'noopener noreferrer');
@@ -44,7 +49,9 @@ flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().initializers.add('walsgi
   });
 
   // Initial processing for existing links
-  openExternalLinksInNewTab();
+  setTimeout(function () {
+    openExternalLinksInNewTab();
+  }, 0);
 
   // Clean up observer when the page is unloaded
   window.addEventListener('beforeunload', function () {

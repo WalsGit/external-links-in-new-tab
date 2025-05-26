@@ -57,6 +57,7 @@
     },
     "support": {
         "issues": "https://github.com/WalsGit/external-links-in-new-tab/issues",
+        "source": "https://github.com/WalsGit/external-links-in-new-tab",
         "forum": "https://discuss.flarum.org/d/36348-external-links-in-new-tab"
     }
 }
