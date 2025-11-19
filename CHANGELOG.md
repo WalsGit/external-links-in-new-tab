@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.0.0] - 2025-11-19
+### Changed
+- Upgraded to be compatible with Flarum V2 (as of v2.0.0-beta.3)
+
 ## [1.1.2] - 2025-05-26
 ### Fixed
 - using flarum's ``baseUrl`` attribute instead of ``window.location.host`` to identify internal links so that it could work with flarum sites installed in a subfolder (mysite.tld/flarum)
