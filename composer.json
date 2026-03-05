@@ -2,7 +2,7 @@
     "name": "walsgit/external-links-in-new-tab",
     "description": "Opens all external links in a new tab",
     "keywords": [
-        "flarum", "flarum-extention", "extension", "links", "url", "forum", "nav"
+        "flarum", "flarum-extension", "extension", "links", "url", "forum", "nav"
     ],
     "type": "flarum-extension",
     "license": "MIT",
