@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0] - 2026-03-05
+### Fixed
+- freeze due to infinite loop when adding a link via the insert link button of the `askvortsov/flarum-rich-text`extension as reported in this [issue](https://github.com/WalsGit/external-links-in-new-tab/issues/10)
+- typos
+### Changed
+- updated README & CHANGELOG
+
 ## [2.0.0] - 2025-11-19
 ### Changed
 - Upgraded to be compatible with Flarum V2 (as of v2.0.0-beta.3)
