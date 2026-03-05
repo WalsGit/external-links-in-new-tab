@@ -8,7 +8,7 @@ Adds `target="_blank" rel="noopener noreferrer"` to every external link on the f
 
 ## Versions
 Starting with the version `2.0.0` of this extension, it will only be compatible with `Flarum v2.*`.
-Lastest version of the extension compatible with `Flarum v1.8.*` is `walsgit/external-links-in-new-tab:"1.1.2"`.
+Latest version of the extension compatible with `Flarum v1.8.*` is `walsgit/external-links-in-new-tab:"1.2.0"`.
 
 ## Installation
 
