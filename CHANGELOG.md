@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.0] - 2026-03-05
+### Fixed
+- freeze due to infinite loop when adding a link via the insert link button of the `askvortsov/flarum-rich-text`extension as reported in this [issue](https://github.com/WalsGit/external-links-in-new-tab/issues/10)
+
 ## [1.1.2] - 2025-05-26
 ### Fixed
 - using flarum's ``baseUrl`` attribute instead of ``window.location.host`` to identify internal links so that it could work with flarum sites installed in a subfolder (mysite.tld/flarum)
