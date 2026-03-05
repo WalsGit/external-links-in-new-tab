@@ -19,21 +19,31 @@ flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().initializers.add('walsgi
     var fullbaseUrl = new URL(flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().forum.attribute('baseUrl'));
     var baseUrl = fullbaseUrl.hostname + fullbaseUrl.pathname; // base URL without https:// or https://
 
-    document.querySelectorAll('a[href^="http"]').forEach(function (element) {
+    var links = document.querySelectorAll('a[href^="http"]');
+    links.forEach(function (element) {
+      if (element.closest('.ProseMirror, .Composer')) return;
       var href = element.getAttribute('href');
       if (href) {
-        var url = new URL(href);
-        var checkedUrl = url.hostname + url.pathname;
-        if (!checkedUrl.startsWith(baseUrl)) {
-          if (!element.hasAttribute('target') || element.getAttribute('target') !== '_blank') element.setAttribute('target', '_blank');
-          if (!element.hasAttribute('rel')) {
-            element.setAttribute('rel', 'noopener noreferrer');
-          } else {
+        try {
+          var url = new URL(href);
+          var checkedUrl = url.hostname + url.pathname;
+          if (!checkedUrl.startsWith(baseUrl)) {
+            if (!element.hasAttribute('target') || element.getAttribute('target') !== '_blank') {
+              element.setAttribute('target', '_blank');
+            }
             var rel = element.getAttribute('rel') || '';
-            if (!rel.includes('noopener')) rel += " noopener";
-            if (!rel.includes('noreferrer')) rel += " noreferrer";
-            element.setAttribute('rel', rel);
+            var parts = rel.split(' ').filter(function (p) {
+              return p.length > 0;
+            });
+            if (!parts.includes('noopener')) parts.push('noopener');
+            if (!parts.includes('noreferrer')) parts.push('noreferrer');
+            var newRel = parts.join(' ');
+            if (rel !== newRel) {
+              element.setAttribute('rel', newRel);
+            }
           }
+        } catch (e) {
+          // Ignore
         }
       }
     });

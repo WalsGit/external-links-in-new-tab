@@ -8,30 +8,45 @@ app.initializers.add('walsgit/external-links', () => {
         const fullbaseUrl = new URL(app.forum.attribute('baseUrl'));
         const baseUrl = fullbaseUrl.hostname + fullbaseUrl.pathname; // base URL without https:// or https://
 
-        document.querySelectorAll('a[href^="http"]').forEach((element: Element) => {
+        const links = document.querySelectorAll<HTMLAnchorElement>('a[href^="http"]');
+
+        links.forEach((element) => {
+            if (element.closest('.ProseMirror, .Composer')) return;
+
             const href = element.getAttribute('href');
 
             if (href) {
-                const url = new URL(href);
-                const checkedUrl = url.hostname + url.pathname; 
-                if (!checkedUrl.startsWith(baseUrl)) {
-                    if(!element.hasAttribute('target') || element.getAttribute('target') !== '_blank') element.setAttribute('target', '_blank');
-                    if(!element.hasAttribute('rel')) {
-                        element.setAttribute('rel', 'noopener noreferrer');
-                    } else {
+                try {
+                    const url = new URL(href);
+                    const checkedUrl = url.hostname + url.pathname; 
+                    
+                    if (!checkedUrl.startsWith(baseUrl)) {
+                        if(!element.hasAttribute('target') || element.getAttribute('target') !== '_blank') {
+                            element.setAttribute('target', '_blank');
+                        }
+                        
                         let rel = element.getAttribute('rel') || '';
-                        if(!rel.includes('noopener')) rel += " noopener";
-                        if(!rel.includes('noreferrer')) rel += " noreferrer";
-                        element.setAttribute('rel', rel);
+                        const parts = rel.split(' ').filter(p => p.length > 0);
+                        
+                        if (!parts.includes('noopener')) parts.push('noopener');
+                        if (!parts.includes('noreferrer')) parts.push('noreferrer');
+                        
+                        const newRel = parts.join(' ');
+                        if (rel !== newRel) {
+                            element.setAttribute('rel', newRel);
+                        }
                     }
+                } catch (e) {
+                    // Ignore
                 }
             }
         });
     }
+
     const observer = new MutationObserver(() => {
         openExternalLinksInNewTab();
     });
-
+    
     // Attach observer to monitor dynamic changes in the document
     observer.observe(document.body, { childList: true, subtree: true });
 
@@ -43,5 +58,3 @@ app.initializers.add('walsgit/external-links', () => {
     // Clean up observer when the page is unloaded
     window.addEventListener('beforeunload', () => observer.disconnect());
 });
-
-
