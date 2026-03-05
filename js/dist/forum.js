@@ -1,2 +1,164 @@
-(()=>{var e={n:t=>{var r=t&&t.__esModule?()=>t.default:()=>t;return e.d(r,{a:r}),r},d:(t,r)=>{for(var n in r)e.o(r,n)&&!e.o(t,n)&&Object.defineProperty(t,n,{enumerable:!0,get:r[n]})},o:(e,t)=>Object.prototype.hasOwnProperty.call(e,t)};(()=>{"use strict";const t=flarum.reg.get("core","forum/app");var r=e.n(t);r().initializers.add("walsgit/external-links",(()=>{const e=()=>{if(!r().forum||!r().forum.attribute)return;const e=new URL(r().forum.attribute("baseUrl")),t=e.hostname+e.pathname;document.querySelectorAll('a[href^="http"]').forEach((e=>{const r=e.getAttribute("href");if(r){const n=new URL(r);if(!(n.hostname+n.pathname).startsWith(t))if(e.hasAttribute("target")&&"_blank"===e.getAttribute("target")||e.setAttribute("target","_blank"),e.hasAttribute("rel")){let t=e.getAttribute("rel")||"";t.includes("noopener")||(t+=" noopener"),t.includes("noreferrer")||(t+=" noreferrer"),e.setAttribute("rel",t)}else e.setAttribute("rel","noopener noreferrer")}}))},t=new MutationObserver((()=>{e()}));t.observe(document.body,{childList:!0,subtree:!0}),setTimeout((()=>{e()}),0),window.addEventListener("beforeunload",(()=>t.disconnect()))}))})(),module.exports={}})();
+/******/ (() => { // webpackBootstrap
+/******/ 	// runtime can't be in strict mode because a global variable is assign and maybe created.
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/forum/index.ts":
+/*!****************************!*\
+  !*** ./src/forum/index.ts ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/forum/app */ "flarum/forum/app");
+/* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_app__WEBPACK_IMPORTED_MODULE_0__);
+
+flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().initializers.add('walsgit/external-links', () => {
+  const openExternalLinksInNewTab = () => {
+    if (!(flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().forum) || !(flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().forum).attribute) return;
+    const fullbaseUrl = new URL(flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().forum.attribute('baseUrl'));
+    const baseUrl = fullbaseUrl.hostname + fullbaseUrl.pathname; // base URL without https:// or https://
+
+    const links = document.querySelectorAll('a[href^="http"]');
+    links.forEach(element => {
+      if (element.closest('.ProseMirror, .Composer')) return;
+      const href = element.getAttribute('href');
+      if (href) {
+        try {
+          const url = new URL(href);
+          const checkedUrl = url.hostname + url.pathname;
+          if (!checkedUrl.startsWith(baseUrl)) {
+            if (!element.hasAttribute('target') || element.getAttribute('target') !== '_blank') {
+              element.setAttribute('target', '_blank');
+            }
+            let rel = element.getAttribute('rel') || '';
+            const parts = rel.split(' ').filter(p => p.length > 0);
+            if (!parts.includes('noopener')) parts.push('noopener');
+            if (!parts.includes('noreferrer')) parts.push('noreferrer');
+            const newRel = parts.join(' ');
+            if (rel !== newRel) {
+              element.setAttribute('rel', newRel);
+            }
+          }
+        } catch (e) {
+          // Ignore
+        }
+      }
+    });
+  };
+  const observer = new MutationObserver(() => {
+    openExternalLinksInNewTab();
+  });
+
+  // Attach observer to monitor dynamic changes in the document
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  // Initial processing for existing links
+  setTimeout(() => {
+    openExternalLinksInNewTab();
+  }, 0);
+
+  // Clean up observer when the page is unloaded
+  window.addEventListener('beforeunload', () => observer.disconnect());
+});
+
+/***/ }),
+
+/***/ "flarum/forum/app":
+/*!******************************************************!*\
+  !*** external "flarum.reg.get('core', 'forum/app')" ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = flarum.reg.get('core', 'forum/app');
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		flarum.reg._webpack_runtimes["walsgit-external-links-in-new-tab"] ||= __webpack_require__;// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+/*!******************!*\
+  !*** ./forum.ts ***!
+  \******************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _src_forum__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/forum */ "./src/forum/index.ts");
+
+})();
+
+module.exports = __webpack_exports__;
+/******/ })()
+;
 //# sourceMappingURL=forum.js.map
