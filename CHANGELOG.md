@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.2.0] - 2026-10-17
+### Changed
+- In Post external links are now handled in the backend (Thanks to [@luceos](https://discuss.flarum.org/d/39033-open-links-in-new-tab-a-flarum-20-extension/2) for the idea.)
+- Other external links on the forum frontend (menus, navigation bar, etc.) are now handled with click event, without overriding the element.
+- Updated composer.json and other cleanup.
+
+### Fixed
+- typos
+
 ## [2.1.0] - 2026-03-05
 ### Fixed
 - freeze due to infinite loop when adding a link via the insert link button of the `askvortsov/flarum-rich-text`extension as reported in this [issue](https://github.com/WalsGit/external-links-in-new-tab/issues/10)
