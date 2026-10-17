@@ -1,60 +1,31 @@
 import app from 'flarum/forum/app';
 
 app.initializers.add('walsgit/external-links', () => {
-    
-    const openExternalLinksInNewTab = () => {
-        if (!app.forum || !app.forum.attribute) return;
+  document.addEventListener('click', (event: MouseEvent) => {
+    // Ignoring modified clicks (ctrl/cmd/shift/alt) and non-primary buttons
+    if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
 
-        const fullbaseUrl = new URL(app.forum.attribute('baseUrl'));
-        const baseUrl = fullbaseUrl.hostname + fullbaseUrl.pathname; // base URL without https:// or https://
+    const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[href]');
 
-        const links = document.querySelectorAll<HTMLAnchorElement>('a[href^="http"]');
+    // Ignoring links with an explicit target and editor links
+    if (!link || link.target || link.closest('.ProseMirror, .Composer')) return;
 
-        links.forEach((element) => {
-            if (element.closest('.ProseMirror, .Composer')) return;
+    let url: URL;
 
-            const href = element.getAttribute('href');
-
-            if (href) {
-                try {
-                    const url = new URL(href);
-                    const checkedUrl = url.hostname + url.pathname; 
-                    
-                    if (!checkedUrl.startsWith(baseUrl)) {
-                        if(!element.hasAttribute('target') || element.getAttribute('target') !== '_blank') {
-                            element.setAttribute('target', '_blank');
-                        }
-                        
-                        let rel = element.getAttribute('rel') || '';
-                        const parts = rel.split(' ').filter(p => p.length > 0);
-                        
-                        if (!parts.includes('noopener')) parts.push('noopener');
-                        if (!parts.includes('noreferrer')) parts.push('noreferrer');
-                        
-                        const newRel = parts.join(' ');
-                        if (rel !== newRel) {
-                            element.setAttribute('rel', newRel);
-                        }
-                    }
-                } catch (e) {
-                    // Ignore
-                }
-            }
-        });
+    try {
+      url = new URL(link.href);
+    } catch (e) {
+      return;
     }
 
-    const observer = new MutationObserver(() => {
-        openExternalLinksInNewTab();
-    });
-    
-    // Attach observer to monitor dynamic changes in the document
-    observer.observe(document.body, { childList: true, subtree: true });
+    // Only http(s): ignoring mailto:, tel:, etc.
+    if (!['http:', 'https:'].includes(url.protocol)) return;
 
-    // Initial processing for existing links
-    setTimeout(() => {
-        openExternalLinksInNewTab();
-    }, 0);
+    const forumHostname = new URL(app.forum.attribute('baseUrl')).hostname;
 
-    // Clean up observer when the page is unloaded
-    window.addEventListener('beforeunload', () => observer.disconnect());
+    if (url.hostname.toLowerCase() === forumHostname.toLowerCase()) return;
+
+    event.preventDefault();
+    window.open(url.href, '_blank', 'noopener,noreferrer');
+  });
 });
