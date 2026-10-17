@@ -2,9 +2,11 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/walsgit/external-links-in-new-tab.svg)](https://packagist.org/packages/walsgit/external-links-in-new-tab) [![Total Downloads](https://img.shields.io/packagist/dt/walsgit/external-links-in-new-tab.svg)](https://packagist.org/packages/walsgit/external-links-in-new-tab) [![Donate here](https://img.shields.io/badge/donate-here-%23008e97)](https://walsgit.github.io/Donations/)
 
-A [Flarum](https://flarum.org) extension. Opens all external links in a new tab
+A [Flarum](https://flarum.org) extension. 
 
-Adds `target="_blank" rel="noopener noreferrer"` to every external link on the forum frontend (excluding the admin frontend). As of version 1.1.0, it no longer overrides existing rel attributes, but adds the `noopener noreferrer` if not found in them (Thanks to [@clarkwinkelmann](https://discuss.flarum.org/d/36348-external-links-in-new-tab/2) for pointing that out).
+Opens all external links in a new tab: 
+* Links inside posts are handled on the backend (`target="_blank" rel="noopener noreferrer"` is added when posts are rendered).
+* Other external links on the forum frontend (menus, navigation bar, etc.) are opened in a new tab on click event.
 
 ## Versions
 Starting with the version `2.0.0` of this extension, it will only be compatible with `Flarum v2.*`.
@@ -22,9 +24,12 @@ composer require walsgit/external-links-in-new-tab:"*"
 
 ```sh
 composer update walsgit/external-links-in-new-tab:"*"
-php flarum migrate
 php flarum cache:clear
 ```
+
+## Notes
+- Thanks to [@luceos](https://discuss.flarum.org/u/luceos) for [pointing out another way of doing this](https://discuss.flarum.org/d/39033-open-links-in-new-tab-a-flarum-20-extension/2) (version 2.2.0).
+- Made with the help of AI.
 
 ## Links
 

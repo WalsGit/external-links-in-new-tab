@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of walsgit/external-link-in-new-tab.
+ * This file is part of walsgit/external-links-in-new-tab.
  *
  * Copyright (c) 2024 Wa!id.
  *
@@ -12,8 +12,12 @@
 namespace Walsgit\ExternalLinksInNewTab;
 
 use Flarum\Extend;
+use Psr\Http\Message\UriInterface;
 
 return [
     (new Extend\Frontend('forum'))
-        ->js(__DIR__.'/js/dist/forum.js')
+        ->js(__DIR__.'/js/dist/forum.js'),
+    (new Extend\Link())
+        ->setTarget(fn (?UriInterface $uri, UriInterface $siteUrl) => ExternalLink::isExternal($uri, $siteUrl) ? '_blank' : null)
+        ->setRel(fn (?UriInterface $uri, UriInterface $siteUrl) => ExternalLink::isExternal($uri, $siteUrl) ? 'noopener noreferrer' : null),
 ];
