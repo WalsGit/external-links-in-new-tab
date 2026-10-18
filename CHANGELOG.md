@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1] - 2026-10-18
+### Fixed
+- Consider same-host links outside the forum base path as external
+
+### Added
+- add unit tests for ExternalLink::isExternal
+
 ## [2.2.0] - 2026-10-17
 ### Changed
 - In Post external links are now handled in the backend (Thanks to [@luceos](https://discuss.flarum.org/d/39033-open-links-in-new-tab-a-flarum-20-extension/2) for the idea.)
