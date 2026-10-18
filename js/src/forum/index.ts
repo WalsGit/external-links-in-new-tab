@@ -21,9 +21,19 @@ app.initializers.add('walsgit/external-links', () => {
     // Only http(s): ignoring mailto:, tel:, etc.
     if (!['http:', 'https:'].includes(url.protocol)) return;
 
-    const forumHostname = new URL(app.forum.attribute('baseUrl')).hostname;
+    const forumUrl = new URL(app.forum.attribute('baseUrl'));
 
-    if (url.hostname.toLowerCase() === forumHostname.toLowerCase()) return;
+    let basePath = forumUrl.pathname;
+
+    while (basePath.endsWith('/')) {
+      basePath = basePath.slice(0, -1);
+    }
+
+    const isInternal =
+      url.hostname.toLowerCase() === forumUrl.hostname.toLowerCase() &&
+      (basePath === '' || url.pathname === basePath || url.pathname.startsWith(basePath + '/'));
+
+    if (isInternal) return;
 
     event.preventDefault();
     window.open(url.href, '_blank', 'noopener,noreferrer');

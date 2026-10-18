@@ -7,6 +7,7 @@ A [Flarum](https://flarum.org) extension.
 Opens all external links in a new tab: 
 * Links inside posts are handled on the backend (`target="_blank" rel="noopener noreferrer"` is added when posts are rendered).
 * Other external links on the forum frontend (menus, navigation bar, etc.) are opened in a new tab on click event.
+* When Flarum is installed in a subfolder (example.tld/flarum), links to other paths (example.tld/blog) are considered external.
 
 ## Versions
 Starting with the version `2.0.0` of this extension, it will only be compatible with `Flarum v2.*`.
