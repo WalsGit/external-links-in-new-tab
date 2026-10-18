@@ -12,6 +12,19 @@ class ExternalLink
             return false;
         }
 
-        return strtolower($uri->getHost()) !== strtolower($siteUrl->getHost());
+        if (strtolower($uri->getHost()) !== strtolower($siteUrl->getHost())) {
+            return true;
+        }
+
+        // Same host: internal only if the path is inside the forum base path
+        $basePath = rtrim($siteUrl->getPath(), '/');
+
+        if ($basePath === '') {
+            return false;
+        }
+
+        $path = $uri->getPath();
+
+        return $path !== $basePath && strpos($path, $basePath.'/') !== 0;
     }
 }
