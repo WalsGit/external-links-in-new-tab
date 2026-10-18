@@ -22,7 +22,12 @@ app.initializers.add('walsgit/external-links', () => {
     if (!['http:', 'https:'].includes(url.protocol)) return;
 
     const forumUrl = new URL(app.forum.attribute('baseUrl'));
-    const basePath = forumUrl.pathname.replace(/\/+$/, '');
+
+    let basePath = forumUrl.pathname;
+
+    while (basePath.endsWith('/')) {
+      basePath = basePath.slice(0, -1);
+    }
 
     const isInternal =
       url.hostname.toLowerCase() === forumUrl.hostname.toLowerCase() &&
