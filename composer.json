@@ -31,6 +31,14 @@
             "Walsgit\\ExternalLinksInNewTab\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Walsgit\\ExternalLinksInNewTab\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test:unit": "phpunit -c tests/phpunit.unit.xml"
+    },
     "extra": {
         "flarum-extension": {
             "title": "External Links In New Tab",
@@ -64,5 +72,8 @@
         "issues": "https://github.com/WalsGit/external-links-in-new-tab/issues",
         "source": "https://github.com/WalsGit/external-links-in-new-tab",
         "forum": "https://discuss.flarum.org/d/36348-external-links-in-new-tab"
+    },
+    "require-dev": {
+        "flarum/testing": "^2.0"
     }
 }
